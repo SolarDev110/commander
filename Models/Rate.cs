@@ -14,6 +14,6 @@ namespace commander.Models
         [Required]
         public Phone Phone { get; set; }
         public int PhoneId { get; set; }
-        public ICollection<Trans> Transactions{get;set;}
+        public ICollection<Transaction> Transactions{get;set;}
     }
 }

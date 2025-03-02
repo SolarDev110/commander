@@ -1,20 +1,13 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace commander.Models
+namespace commander.Dtos
 {
-    public class Trans
+    public class TransactionReadDto
     {
         public int Id { get; set; }
         public int FromPhoneId { get; set; }
         public int ToPhoneId { get; set; }
-       
-        [Required]
         public decimal Amount { get; set; }
         public DateTime TransactionDate { get; set; } = DateTime.UtcNow;
-       
-        public Phone FromPhone { get; set; }
-        
-        public Phone ToPhone { get; set; }
-       
     }
 }

@@ -12,14 +12,15 @@ internal class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer
         (builder.Configuration.GetConnectionString("ProjectConnection")));
-
+        
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
         builder.Services.AddScoped<IPhoneRepo, PhoneRepo>();
         builder.Services.AddScoped<IRateRepo, RateRepo>();
-        builder.Services.AddScoped<TransactionRepo>();
+        builder.Services.AddScoped<ITransactionRepo,TransactionRepo>();
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -31,31 +32,7 @@ internal class Program
 
         app.UseHttpsRedirection();
         app.MapControllers();
-        var summaries = new[]
-        {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-        app.MapGet("/weatherforecast", () =>
-        {
-            var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-                .ToArray();
-            return forecast;
-        })
-        .WithName("GetWeatherForecast")
-        .WithOpenApi();
-
         app.Run();
     }
 }
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

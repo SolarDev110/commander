@@ -1,5 +1,6 @@
 using commander.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace commander.Data
 {
@@ -7,35 +8,18 @@ namespace commander.Data
     {
         public AppDBContext(DbContextOptions<AppDBContext> opt) : base(opt)
         {
-
         }
 
+
+        #region Tables
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Rate> Rates { get; set; }
-        public DbSet<Trans> Transactions { get; set; }
-
+        public DbSet<Transaction> Transactions { get; set; }
+        #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
-
-       
-            modelBuilder.Entity<Trans>()
-                .HasOne(t => t.FromPhone)
-                .WithMany(p => p.SentTransactions)
-                .HasForeignKey(t => t.FromPhoneId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-           
-            modelBuilder.Entity<Trans>()
-                .HasOne(t => t.ToPhone)
-                .WithMany(p => p.ReceivedTransactions)
-                .HasForeignKey(t => t.ToPhoneId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-          
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-
-
     }
 }

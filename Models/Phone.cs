@@ -11,8 +11,8 @@ namespace commander.Models
         public string PhoneNumber { get; set; }
         [Required]
         public ICollection<Rate> Rates { get; set; }
-        public ICollection<Trans> SentTransactions { get; set; }   
-        public ICollection<Trans> ReceivedTransactions { get; set; }
+        public ICollection<Transaction> SentTransactions { get; set; }   
+        public ICollection<Transaction> ReceivedTransactions { get; set; }
       
 
     }
