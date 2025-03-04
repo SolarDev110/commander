@@ -87,15 +87,16 @@ namespace commander.Controllers
                 }
                 else
                 {
+                    amountkeeper = amountkeeper - 100 + itemkeeper;
                     item.Amount = 100;
-                    amountkeeper -= itemkeeper;
+                    
                 }
             }
             decimal sumTo = sumToPhone.Sum(x => x.Amount);
 
             return Ok($"{(int)sumFrom} , {(int)sumTo}");
         }
-
+        /// amount keeper -100 +item
 
     }
 
